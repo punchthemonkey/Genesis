@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  genesis:
+    build: .
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      - VITE_DEFAULT_MODEL=${VITE_DEFAULT_MODEL:-SmolLM2-135M-Instruct-q4f16_1-MLC}
